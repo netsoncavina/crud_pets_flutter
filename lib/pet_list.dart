@@ -134,8 +134,8 @@ class _PetListState extends State<PetList> {
           }
           debugPrint("model.data: ${model}");
           return const Center(
-            child: CircularProgressIndicator(),
-            // child: Text("AAAAAAAAAa"),
+            // child: CircularProgressIndicator(),
+            child: Text("AAAAAAAAAa"),
           );
         });
   }

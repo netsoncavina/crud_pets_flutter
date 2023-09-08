@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:crud_pets_flutter/api_service.dart';
@@ -145,12 +146,12 @@ class _PetAddEditState extends State<PetAddEdit> {
                 hintColor: Colors.black.withOpacity(0.7),
                 borderRadius: 10,
                 showPrefixIcon: false)),
-        // picPicker(isImageSelected, petModel!.petImage ?? "", (file) {
-        //   setState(() {
-        //     petModel!.petImage = file.path;
-        //     isImageSelected = true;
-        //   });
-        // }),
+        picPicker(isImageSelected, petModel!.petImage ?? "", (file) {
+          setState(() {
+            petModel!.petImage = file.path;
+            isImageSelected = true;
+          });
+        }),
         const SizedBox(
           height: 20,
         ),
@@ -196,7 +197,7 @@ class _PetAddEditState extends State<PetAddEdit> {
     return false;
   }
 
-  static Widget picPicker(
+  Widget picPicker(
     bool isFileSelected,
     String fileName,
     Function onFilePicked,
@@ -238,6 +239,11 @@ class _PetAddEditState extends State<PetAddEdit> {
                     _imageFile = _picker.pickImage(source: ImageSource.gallery);
                     _imageFile.then((file) async {
                       onFilePicked(file);
+
+                      // image to base64
+                      List<int> imageBytes = await file!.readAsBytes();
+                      String base64Image = base64Encode(imageBytes);
+                      petModel!.petImage = base64Image;
                     });
                   },
                 )),

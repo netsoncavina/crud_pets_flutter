@@ -39,13 +39,14 @@ class APIService {
     request.fields['petAge'] = model.petAge.toString();
     request.fields['petType'] = model.petType;
     request.fields['petBreed'] = model.petBreed;
+    request.fields['petImage'] = model.petImage;
 
-    if (model.petImage != null && isFileSelected) {
-      http.MultipartFile multipartFile =
-          await http.MultipartFile.fromPath('petImage', model.petImage!);
+    // if (model.petImage != null && isFileSelected) {
+    //   http.MultipartFile multipartFile =
+    //       await http.MultipartFile.fromPath('petImage', model.petImage!);
 
-      request.files.add(multipartFile);
-    }
+    //   request.files.add(multipartFile);
+    // }
 
     var response = await request.send();
 

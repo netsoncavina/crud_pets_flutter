@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:crud_pets_flutter/models/pet_model.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +27,8 @@ class PetItem extends StatelessWidget {
   }
 
   Widget petWidget(context) {
+    Uint8List bytes = base64Decode(model!.petImage!);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -32,13 +37,12 @@ class PetItem extends StatelessWidget {
           width: 120,
           alignment: Alignment.center,
           margin: const EdgeInsets.all(10),
-          child: Image.network(
-            (model!.petImage == null || model!.petImage == "")
-                ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
-                : model!.petImage!,
-            height: 120,
-            fit: BoxFit.scaleDown,
-          ),
+          child: (model!.petImage == null || model!.petImage == "")
+              ? Image.network(
+                  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
+                  height: 120,
+                  fit: BoxFit.scaleDown)
+              : Image.memory(bytes, height: 120, fit: BoxFit.scaleDown),
         ),
         Padding(
             padding: const EdgeInsets.all(8.0),
